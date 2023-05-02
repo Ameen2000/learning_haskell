@@ -57,6 +57,7 @@ leftpadInner str cchar nchar nlen
 leftpad str cchar nchar = leftpadInner str cchar nchar (length str)
 
 -- Caesar Cipher
+cipherCaesar :: Int -> [Char] -> [Char]
 cipherCaesar shift msg =
   let ords = map ord msg
       shifter1 x n = (((n-97)+x) `mod` 26)+97 -- This is how we shift lowercases
@@ -70,5 +71,6 @@ cipherCaesar shift msg =
 
 
 -- Find key function using where instead of a lambda
+findKey :: (Foldable t, Eq p) => p -> t (p, a) -> Maybe a
 findKey key = foldr find Nothing
   where find (k,v) acc = if key == k then Just v else acc
