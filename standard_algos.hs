@@ -45,8 +45,7 @@ myreverse (x:xs) = myreverse xs ++ [x]
 -- search 
 search :: Eq a => [a] -> [a] -> Bool
 search needle haystack =
-  let nlen = length needle
-  in
+  let nlen = length needle in
   foldl (\acc x -> (take nlen x == needle) || acc) 
   False (tails haystack)
 
@@ -75,3 +74,30 @@ cipherCaesar shift msg =
 findKey :: (Foldable t, Eq p) => p -> t (p, a) -> Maybe a
 findKey key = foldr find Nothing
   where find (k,v) acc = if key == k then Just v else acc
+
+-- Implementing a binary search tree
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+
+node :: a -> Tree a
+node x = Node x EmptyTree EmptyTree
+
+treeInsert :: (Ord a) => a -> Tree a -> Tree a
+treeInsert x EmptyTree = node x
+treeInsert x (Node a left right)
+  | x == a = Node x left right
+  | x < a = Node a (treeInsert x left) right
+  | x > a = Node a left (treeInsert x right)
+
+treeElem :: (Ord a) => a -> Tree a -> Bool
+treeElem x EmptyTree = False
+treeElem x (Node a left right)
+  | x == a = True
+  | x < a = treeElem x left
+  | x > a = treeElem x right
+
+-- Tree generator from a list of nums
+treeright :: (Ord a) => [a] -> Tree a
+treeright [] = EmptyTree
+treeright lst = foldr treeInsert EmptyTree lst
+
+treeleft lst = treeright (reverse lst)
