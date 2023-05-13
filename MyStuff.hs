@@ -1,3 +1,8 @@
+module MyStuff 
+  (
+    cipherCaesar
+  ) where
+
 import Data.List (tails)
 import Data.Char (ord, chr)
 -- This file contains just common algos written in haskell
@@ -73,7 +78,8 @@ cipherCaesar shift msg =
 -- Find key function using where instead of a lambda
 findKey :: (Foldable t, Eq p) => p -> t (p, a) -> Maybe a
 findKey key = foldr find Nothing
-  where find (k,v) acc = if key == k then Just v else acc
+  where find (k,v) acc =
+          if key == k then Just v else acc
 
 -- Implementing a binary search tree
 data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
