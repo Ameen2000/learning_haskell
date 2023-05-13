@@ -1,3 +1,8 @@
+module MyStuff 
+  (
+    cipherCaesar
+  ) where
+
 import Data.List (tails)
 import Data.Char (ord, chr)
 -- This file contains just common algos written in haskell
