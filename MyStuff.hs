@@ -55,11 +55,11 @@ search needle haystack =
   False (tails haystack)
 
 -- leftpad
-leftpadInner :: [Char] -> Char -> Int -> Int -> [Char]
-leftpadInner str cchar nchar nlen
-  | nchar <= nlen = str
-  | otherwise = leftpadInner (cchar:str) cchar (nchar-1) nlen
+leftpad :: String -> Char -> Int -> String
 leftpad str cchar nchar = leftpadInner str cchar nchar (length str)
+  where leftpadInner str cchar nchar nlen
+          | nchar <= nlen = str 
+          | otherwise = leftpadInner (cchar:str) cchar (nchar-1) nlen
 
 -- Caesar Cipher
 cipherCaesar :: Int -> [Char] -> [Char]
